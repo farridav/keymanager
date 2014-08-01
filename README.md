@@ -14,23 +14,32 @@ I could of used my ssh agent, and made use of `ssh-copy-id` but thats also highl
 powered key manager that allows me to add, remove and list ssh keys for any number of hosts at a time.
 
 
-### Set it up
+### Set it up (production)
+
+    pip install git+git://github.com/farridav/keymanager.git
+
+\* Will be on pypi soon, see [Issue 2](https://github.com/farridav/keymanager/issues/2)
+
+### Set it up (development)
 
     git clone git@github.com:farridav/keymanager.git
-    virtualenv .venv
-    . .venv/bin/activate
+    cd keymanager
     pip install -r requirements.txt
 
 ### Use it
 
+#### List available commands
+
+    keymanager
+
 #### List users
 
-    fab list_users --hosts user@host,otheruser@otherhost
+    keymanager list_users --hosts user@host,otheruser@otherhost
 
 #### Add a new user
 
-    fab add_user --hosts user@host
+    keymanager add_user --hosts user@host
 
 #### Delete a user
 
-    fab delete_user --hosts user@host
+    keymanager delete_user --hosts user@host
