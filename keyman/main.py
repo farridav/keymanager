@@ -12,14 +12,11 @@ from helpers import KeysFile
 
 def keymanager_main():
     """
-    If we call keymanager with no arguments, pass in fabrics `-l` arg to list
-    of available tasks, then call fabrics own `main` function.
-
-    Using __file__, but ensuring we don't get the compiled version
+    Override the interface to Fabric so we can list tasks off by default
     """
-    if len(sys.argv) == 1:
+    if len(sys.argv) < 2:
         sys.argv.append('-l')
-    return main(fabfile_locations=[__file__.replace('pyc', 'py')])
+    main(fabfile_locations=[__file__.replace('pyc', 'py')])
 
 
 @task
@@ -27,7 +24,7 @@ def list_users():
     """
     Read the contents of a servers authorized_keys file
 
-        e.g: fab list_users --hosts david@127.0.0.1
+        e.g: keymanager list_users --hosts user@host
 
     """
     with quiet():
@@ -39,17 +36,22 @@ def list_users():
 
 
 @task
-def add_user():
+def add_user(key_or_path=None):
     """
     Add a user to a server using the given identity file
 
-        e.g fab add_user --hosts david@127.0.0.1
+        e.g keymanager add_user --hosts user@host
+            keymanager add_user:~/.ssh/id_rsa.pub --hosts user@host
+            keymanager add_user:ssh-rsa KEY_HASH user@host --hosts user@host
 
     """
     with quiet():
         keyfile = KeysFile()
-        user = prompt(green("Paste key or file path:") + "\n\n",
-                      validate=keyfile.validate_user)
+        if key_or_path is None:
+            user = prompt(green("Paste key or file path:") + "\n\n",
+                          validate=keyfile.validate_user)
+        else:
+            user = keyfile.validate_user(key_or_path)
 
     if keyfile.add_user(user):
         print(green('{} authorized'.format(user.name, env.host_string)))
@@ -62,13 +64,14 @@ def delete_user(username=None):
     """
     Remove a user from a server
 
-        e.g fab delete_user --hosts david@127.0.0.1
+        e.g keymanager delete_user --hosts user@host
+            keymanager delete_user:user@host --hosts user@host
 
     """
     with quiet():
         keyfile = KeysFile()
 
-    if not username:
+    if username is None:
         username = prompt(green("Username: "))
 
     removed = keyfile.delete_user(username)

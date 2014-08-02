@@ -32,6 +32,12 @@ powered key manager that allows me to add, remove and list ssh keys for any numb
 
     keymanager
 
+
+#### Get more details/examples for a command (same as fabric)
+
+    keymanager -d <task_name>
+
+
 #### List users
 
     keymanager list_users --hosts user@host,otheruser@otherhost
@@ -39,7 +45,10 @@ powered key manager that allows me to add, remove and list ssh keys for any numb
 #### Add a new user
 
     keymanager add_user --hosts user@host
+    keymanager add_user:~/.ssh/id_rsa.pub --hosts user@host
+    keymanager add_user:ssh-rsa KEY_HASH user@host --hosts user@host
 
 #### Delete a user
 
     keymanager delete_user --hosts user@host
+    keymanager delete_user:user@host --hosts user@host

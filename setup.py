@@ -7,14 +7,11 @@ except ImportError:
 
 setup(
     name='keymanager',
-    version='1.0.2',
+    version='1.0.0',
     author='farridav',
     author_email='info@davidfarrington.co.uk',
-    entry_points={
-        'console_scripts': [
-            'keymanager = keymanager:keymanager_main',
-        ],
-    },
+    packages=['keyman'],
+    scripts=['keymanager'],
     url='https://github.com/farridav/keymanager.git',
     license='MIT',
     description='SSH Key manager, powered by fabric',
@@ -28,7 +25,5 @@ setup(
         'Operating System :: OS Independent',
         'Topic :: Internet :: WWW/HTTP',
     ],
-    install_requires=[
-        "Fabric>=1.9.0",
-    ],
+    install_requires=["Fabric"],
 )

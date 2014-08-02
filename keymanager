@@ -1,0 +1,7 @@
+#!/usr/bin/env python
+
+from keyman.main import keymanager_main
+
+
+if __name__ == '__main__':
+    keymanager_main()
