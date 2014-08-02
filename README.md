@@ -3,16 +3,24 @@ keymanager
 
 SSH Key manager, powered by fabric
 
-I control access to servers that a team of people need access to, and i dont want to use a generic private key file,
-as I will need to change it and redistribute every time a team member leaves, so i use public keys.
+When controlling access to various servers for various people, it can become
+quite difficult/tedious to manage, for some people its acceptable to pass
+around one common keyfile, but this presents the problem that if any user ever
+leaves, the keyfile will need replacing, and re-distributing to all users.
 
-It got very tedious doing this manually, something like:
+A way to get around this problem, and be generally more secure, is to use
+individual public keys, if a user needs access to one or more servers, they
+give you their public key, and you put it into the `authorized_keys` file on
+the user account/server they need access to.
 
-    ssh username@1.2.3.4 echo "ssh-rsa KEY-HASH-HERE user@domain.com" >> ~/.ssh/authorized_keys
+Doing this manually, e.g:
 
-I could of used my ssh agent, and made use of `ssh-copy-id` but thats also highly impractical, so I wrote a fabric
-powered key manager that allows me to add, remove and list ssh keys for any number of hosts at a time.
+    ssh user@host
+    echo "ssh-rsa KEY_HASH user@host" >> ~/.authorized_keys
 
+Can become tedious to manage, so I wrote a manager that allows you to manage
+keys on multiple servers very easily, it uses the already amazing [fabric](https://github.com/fabric/fabric)
+library.
 
 ### Set it up (production)
 
