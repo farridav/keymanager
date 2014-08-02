@@ -13,11 +13,13 @@ from helpers import KeysFile
 def keymanager_main():
     """
     If we call keymanager with no arguments, pass in fabrics `-l` arg to list
-    of available tasks, then call fabrics own `main` function
+    of available tasks, then call fabrics own `main` function.
+
+    Using __file__, but ensuring we don't get the compiled version
     """
     if len(sys.argv) == 1:
         sys.argv.append('-l')
-    return main(fabfile_locations=['keymanager.py'])
+    return main(fabfile_locations=[__file__.replace('pyc', 'py')])
 
 
 @task
