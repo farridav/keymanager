@@ -1,0 +1,10 @@
+pkill emacs
+ll
+ls -lah
+export DISPLAY=:0; xdotool key --clearmodifiers "ctrl+x"
+export DISPLAY=:0; xdotool key --clearmodifiers "c"
+export DISPLAY=:0; xdotool key --clearmodifiers "n"
+export DISPLAY=:0; xdotool key --clearmodifiers "Return"
+ll
+ls -l
+ps -ef
