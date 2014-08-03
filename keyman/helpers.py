@@ -1,6 +1,6 @@
 from collections import namedtuple
 
-from fabric.api import run, abort
+from fabric.api import run as run, abort
 from fabric.context_managers import quiet
 from fabric.contrib.files import exists
 
