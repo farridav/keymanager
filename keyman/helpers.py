@@ -1,6 +1,8 @@
+import os
+
 from collections import namedtuple
 
-from fabric.api import run as run, abort
+from fabric.api import run as run, abort, local
 from fabric.context_managers import quiet
 from fabric.contrib.files import exists
 
@@ -25,10 +27,14 @@ class KeysFile(object):
 
     def get_user(self, key):
         """
-        Given a public ssh key, return a user object
+        Given a public ssh key or a path to one, return a user object
 
         If an invalid user is given, abort
         """
+        # if we have been given a path
+        if os.path.isfile(key):
+            key = local('cat {}'.format(key), capture=True)
+
         user = namedtuple('User', ['keytype', 'hash', 'name', 'full_key'])
         user.full_key = key
         key_parts = key.split()
@@ -58,14 +64,6 @@ class KeysFile(object):
                 added = True
 
             return added
-
-    def validate_user(self, key):
-        """
-        If passed a key or a path, make a user out of it and return
-        """
-        if exists(key):
-            key = run('cat {}'.format(key))
-        return self.get_user(key)
 
     def delete_user(self, username):
         """

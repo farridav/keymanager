@@ -49,9 +49,9 @@ def add_user(key_or_path=None):
         keyfile = KeysFile()
         if key_or_path is None:
             user = prompt(green("Paste key or file path:") + "\n\n",
-                          validate=keyfile.validate_user)
+                          validate=keyfile.get_user)
         else:
-            user = keyfile.validate_user(key_or_path)
+            user = keyfile.get_user(key_or_path)
 
     if keyfile.add_user(user):
         print(green('{} authorized'.format(user.name, env.host_string)))

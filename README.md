@@ -22,13 +22,13 @@ Can become tedious to manage, so I wrote a manager that allows you to manage
 keys on multiple servers very easily, it uses the already amazing [fabric](https://github.com/fabric/fabric)
 library.
 
-### Set it up (production)
+### Setup (production)
 
     pip install git+git://github.com/farridav/keymanager.git
 
 \* Will be on pypi soon, see [Issue 2](https://github.com/farridav/keymanager/issues/2)
 
-### Set it up (development)
+### Setup (development)
 
 #### Clone the project
 
@@ -37,7 +37,6 @@ library.
 
 #### Install requirements
 
-    pip install -r requirements.txt
     pip install -r test-requirements.txt
 
 #### Run the tests
@@ -50,11 +49,9 @@ library.
 
     keymanager
 
-
 #### Get more details/examples for a command (same as fabric)
 
     keymanager -d <task_name>
-
 
 #### List users
 
@@ -62,11 +59,24 @@ library.
 
 #### Add a new user
 
+##### User prompt
+
     keymanager add_user --hosts user@host
+
+##### By path to key
+
     keymanager add_user:~/.ssh/id_rsa.pub --hosts user@host
+
+##### By direct key
+
     keymanager add_user:ssh-rsa KEY_HASH user@host --hosts user@host
 
 #### Delete a user
 
+##### User prompt
+
     keymanager delete_user --hosts user@host
+
+##### By Username
+
     keymanager delete_user:user@host --hosts user@host
