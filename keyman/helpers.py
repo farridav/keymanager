@@ -15,11 +15,13 @@ class KeysFile(object):
             abort('SSH key file not found')
 
         self.key_file = key_file
-        self.keys = [
-            key for key in run('cat {}'.format(key_file)).split('\n') if key
-        ]
+        self.keys = self.read_keys(self.key_file)
         self.users = [self.get_user(key) for key in self.keys]
         self.hashes = [user.hash for user in self.users]
+
+    def read_keys(self, key_file):
+        keys = run('cat {}'.format(key_file)).split('\n')
+        return [key for key in keys if key]
 
     def get_user(self, key):
         """
@@ -72,6 +74,6 @@ class KeysFile(object):
         with quiet():
             user = [user for user in self.users if user.name == username]
             if user:
-                run('sed -i \'/{}/d\' {}'.format(user, self.key_file))
+                run('sed -i \'/{}/d\' {}'.format(user[0].name, self.key_file))
                 return True
             return False

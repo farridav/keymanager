@@ -30,11 +30,21 @@ library.
 
 ### Set it up (development)
 
+#### Clone the project
+
     git clone git@github.com:farridav/keymanager.git
     cd keymanager
-    pip install -r requirements.txt
 
-### Use it
+#### Install requirements
+
+    pip install -r requirements.txt
+    pip install -r test-requirements.txt
+
+#### Run the tests
+
+    nosetests
+
+### Using it
 
 #### List available commands
 
