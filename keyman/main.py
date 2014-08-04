@@ -61,13 +61,16 @@ def add(key_or_path=None):
 
 
 @task
-def add_batch(key_file, replace=False):
+def add_batch(key_file, replace=False, force=False):
     """
     Add a batch of users to a server using the given file, set replace to True
-    if you wish to remove any users not in given key_file
+    if you wish to remove any users not in given key_file. The `force`
+    argument has been added so this task can be called with no user input
 
         e.g keymanager add_batch:~/key_file.txt --hosts user@host
             keymanager add_batch:~/key_file.txt,replace=True --hosts user@host
+            keymanager add_batch:~/key_file.txt,replace=True,force=True \
+                --hosts user@host
 
     """
     if not os.path.isfile(key_file):
@@ -85,8 +88,14 @@ def add_batch(key_file, replace=False):
         # If we want to remove unspecified users
         if user_diff and replace:
             usernames = '\n\t'.join([user.name for user in user_diff])
-            remove = confirm(red('Remove users ?:\n\t{}'.format(usernames)),
-                             default=False)
+            if force:
+                remove = True
+            else:
+                remove = confirm(
+                    red('Remove users ?:\n\t{}'.format(usernames)),
+                    default=False
+                )
+
             if remove:
                 for user in user_diff:
                     if keyfile.delete_user(user.name):
@@ -122,11 +131,13 @@ def delete(username=None):
 
 
 @task
-def delete_batch(key_file):
+def delete_batch(key_file, force=False):
     """
-    Delete a batch of users to a server using the given file
+    Delete a batch of users to a server using the given file, the `force`
+    argument has been added so this task can be called with no user input
 
         e.g keymanager delete_batch:~/key_file.txt --hosts user@host
+            keymanager delete_batch:~/key_file.txt,force=True --hosts user@host
 
     """
     if not os.path.isfile(key_file):
@@ -137,8 +148,12 @@ def delete_batch(key_file):
         users = [keyfile.get_user(user) for user in
                  keyfile.read_keys(key_file)]
         usernames = '\n\t'.join([user.name for user in users])
-        remove = confirm(red('Remove users ?:\n\t{}'.format(usernames)),
-                         default=False)
+
+        if force:
+            remove = True
+        else:
+            remove = confirm(
+                red('Remove users ?:\n\t{}'.format(usernames)), default=False)
 
         if remove:
             for user in users:
