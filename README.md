@@ -1,6 +1,8 @@
 keymanager
 ==========
 
+[![Build Status](https://travis-ci.org/farridav/keymanager.svg?branch=develop)](https://travis-ci.org/farridav/keymanager)
+
 SSH Key manager, powered by fabric
 
 When controlling access to various servers for various people, it can become
