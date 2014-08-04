@@ -73,17 +73,17 @@ library.
 
 #### Batch Add Users
 
-##### Add a list of users (user prompt)
+##### Add a list of users
 
     keymanager add_batch:~/.ssh/keys_list.txt --hosts user@host
-
-##### Use the `force` argument to avoid user input
-
-    keymanager add_batch:~/.ssh/keys_list.txt,force=True --hosts user@host
 
 ##### Adding a list of users, and removing those not in the list
 
     keymanager add_batch:~/.ssh/keys_list.txt,replace=True --hosts user@host
+
+##### Use the `force` argument to avoid user input
+
+    keymanager add_batch:~/.ssh/keys_list.txt,replace=True,force=True --hosts user@host
 
 #### Delete a user
 
