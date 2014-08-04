@@ -1,6 +1,8 @@
 keymanager
 ==========
 
+[![Build Status](https://travis-ci.org/farridav/keymanager.svg?branch=develop)](https://travis-ci.org/farridav/keymanager)
+
 SSH Key manager, powered by fabric
 
 When controlling access to various servers for various people, it can become
@@ -55,28 +57,52 @@ library.
 
 #### List users
 
-    keymanager list_users --hosts user@host,otheruser@otherhost
+    keymanager list --hosts user@host,otheruser@otherhost
 
 #### Add a new user
 
 ##### User prompt
 
-    keymanager add_user --hosts user@host
+    keymanager add --hosts user@host
 
 ##### By path to key
 
-    keymanager add_user:~/.ssh/id_rsa.pub --hosts user@host
+    keymanager add:~/.ssh/id_rsa.pub --hosts user@host
 
 ##### By direct key
 
-    keymanager add_user:ssh-rsa KEY_HASH user@host --hosts user@host
+    keymanager add:ssh-rsa KEY_HASH user@host --hosts user@host
+
+#### Batch Add Users
+
+##### Add a list of users
+
+    keymanager add_batch:~/.ssh/keys_list.txt --hosts user@host
+
+##### Adding a list of users, and removing those not in the list
+
+    keymanager add_batch:~/.ssh/keys_list.txt,replace=True --hosts user@host
+
+##### Use the `force` argument to avoid user input
+
+    keymanager add_batch:~/.ssh/keys_list.txt,replace=True,force=True --hosts user@host
 
 #### Delete a user
 
 ##### User prompt
 
-    keymanager delete_user --hosts user@host
+    keymanager delete --hosts user@host
 
 ##### By Username
 
-    keymanager delete_user:user@host --hosts user@host
+    keymanager delete:user@host --hosts user@host
+
+#### Batch Delete Users
+
+##### Delete a list of users (user prompt)
+
+    keymanager delete_batch:~/.ssh/keys_list.txt --hosts user@host
+
+##### Use the `force` argument to avoid user input
+
+    keymanager delete_batch:~/.ssh/keys_list.txt,force=True --hosts user@host
