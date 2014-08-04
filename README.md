@@ -79,7 +79,7 @@ library.
 
     keymanager add_batch:~/.ssh/keys_list.txt --hosts user@host
 
-##### Adding a list of users, and removing those not in the list
+##### Adding a list of users, removing those listed (confirmation required)
 
     keymanager add_batch:~/.ssh/keys_list.txt,replace=True --hosts user@host
 
@@ -99,7 +99,7 @@ library.
 
 #### Batch Delete Users
 
-##### Delete a list of users (user prompt)
+##### Delete a list of users (confirmation required)
 
     keymanager delete_batch:~/.ssh/keys_list.txt --hosts user@host
 
