@@ -95,6 +95,7 @@ class TestKeyFile(TestCase):
 
     @patch('keyman.helpers.exists', Mock(return_value=True))
     @patch('keyman.helpers.KeysFile.read_keys', Mock(return_value=[]))
+    @patch('sys.stderr', Mock())
     def test_malformed_key(self):
         """
         If we try to create a user with a malformed key, we abort
