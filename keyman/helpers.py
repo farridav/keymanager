@@ -32,8 +32,8 @@ class KeysFile(object):
         If an invalid user is given, abort
         """
         # if we have been given a path
-        if os.path.isfile(key):
-            key = local('cat {}'.format(key), capture=True)
+        if os.path.isfile(os.path.expanduser(key)):
+            key = local('cat {}'.format(os.path.expanduser(key)), capture=True)
 
         user = namedtuple('User', ['keytype', 'hash', 'name', 'full_key'])
         user.full_key = key

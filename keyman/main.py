@@ -54,7 +54,7 @@ def add(key_or_path=None):
         else:
             user = keyfile.get_user(key_or_path)
 
-    if keyfile.add(user):
+    if keyfile.add_user(user):
         print(green('{} authorized'.format(user.name)))
     else:
         print(yellow('{} already authorized, skipping'.format(user.name)))
@@ -124,7 +124,7 @@ def delete(username=None):
     if username is None:
         username = prompt(green("Username: "))
 
-    if keyfile.delete(username):
+    if keyfile.delete_user(username):
         print(green('{} removed'.format(username)))
     else:
         print(yellow('{} not in keys, skipping'.format(username)))
